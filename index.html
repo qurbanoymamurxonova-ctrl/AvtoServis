@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AvtoServis - Elektron servis daftari</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">AS</div>
+      <div>
+        <strong>AvtoServis</strong>
+        <span>Elektron daftar</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-view="dashboard">
+        <span class="nav-icon">▦</span>
+        <span>Boshqaruv</span>
+      </button>
+      <button class="nav-item" data-view="cars">
+        <span class="nav-icon">◆</span>
+        <span>Avtomobillar</span>
+      </button>
+      <button class="nav-item" data-view="services">
+        <span class="nav-icon">◫</span>
+        <span>Servis yozuvlari</span>
+      </button>
+      <button class="nav-item" data-view="reminders">
+        <span class="nav-icon">◷</span>
+        <span>Eslatmalar</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="status-dot"></span>
+      Tizim faol
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" id="page-eyebrow">Boshqaruv paneli</p>
+        <h1 id="page-title">Xayrli kun</h1>
+      </div>
+      <div class="header-actions">
+        <label class="role-select">
+          Rol
+          <select id="role-select">
+            <option value="haydovchi">Haydovchi</option>
+            <option value="maslahatchi">Servis maslahatchisi</option>
+            <option value="mexanik">Mexanik</option>
+          </select>
+        </label>
+        <button class="primary-btn" id="add-service-btn">
+          <span>＋</span> Yangi yozuv
+        </button>
+      </div>
+    </header>
+
+    <section id="dashboard-view" class="view active">
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon blue">◆</div>
+          <div>
+            <span>Jami avtomobillar</span>
+            <strong id="total-cars">0</strong>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon green">✓</div>
+          <div>
+            <span>Xizmatlar soni</span>
+            <strong id="total-services">0</strong>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon orange">◷</div>
+          <div>
+            <span>Yaqin eslatmalar</span>
+            <strong id="total-reminders">0</strong>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon red">!</div>
+          <div>
+            <span>Kechikkan xizmatlar</span>
+            <strong id="overdue-count">0</strong>
+          </div>
+        </article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Eslatmalar</p>
+              <h2>Yaqin keladigan xizmatlar</h2>
+            </div>
+            <button class="text-btn" data-go="reminders">Barchasi</button>
+          </div>
+          <div id="upcoming-list" class="reminder-list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">So'nggi faoliyat</p>
+              <h2>Oxirgi xizmat yozuvlari</h2>
+            </div>
+            <button class="text-btn" data-go="services">Barchasi</button>
+          </div>
+          <div id="recent-services" class="activity-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="cars-view" class="view">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="car-search" type="search" placeholder="Avtomobil yoki egani qidirish">
+        </div>
+        <div class="toolbar-actions">
+          <button class="secondary-btn" id="enable-notifications-btn">Eslatmalarni yoqish</button>
+          <button class="primary-btn" id="add-car-btn"><span>＋</span> Avtomobil qo‘shish</button>
+        </div>
+      </div>
+      <div class="panel table-panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Avtomobil</th>
+              <th>Davlat raqami</th>
+              <th>Egasi</th>
+              <th>Telefon</th>
+              <th>Yili</th>
+              <th class="actions-col">Amallar</th>
+            </tr>
+          </thead>
+          <tbody id="cars-table"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="services-view" class="view">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="service-search" type="search" placeholder="Avtomobil yoki xizmat qidirish">
+        </div>
+        <button class="primary-btn" id="add-service-toolbar-btn"><span>＋</span> Yangi yozuv</button>
+      </div>
+      <div class="panel table-panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Sana</th>
+              <th>Avtomobil</th>
+              <th>Xizmat turi</th>
+              <th>Probeg</th>
+              <th>Holati</th>
+              <th>Smeta / to‘lov</th>
+              <th>Mexanik</th>
+              <th>Keyingi xizmat</th>
+              <th class="actions-col">Amallar</th>
+            </tr>
+          </thead>
+          <tbody id="services-table"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="reminders-view" class="view">
+      <div class="reminder-summary">
+        <button class="filter-chip active" data-filter="all">Barchasi</button>
+        <button class="filter-chip" data-filter="upcoming">Yaqinlashmoqda</button>
+        <button class="filter-chip" data-filter="overdue">Kechikkan</button>
+      </div>
+      <div id="reminders-grid" class="reminders-grid"></div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="car-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="car-modal-title">Avtomobil qo‘shish</h2>
+        <button class="close-btn" data-close="car-modal">×</button>
+      </div>
+      <form id="car-form">
+        <input type="hidden" id="car-id">
+        <div class="form-grid">
+          <label>Marka va modeli
+            <input id="car-model" required placeholder="Masalan: Chevrolet Cobalt">
+          </label>
+          <label>Davlat raqami
+            <input id="car-plate" required placeholder="Masalan: 01 A 123 BC">
+          </label>
+          <label>Egasi
+            <input id="car-owner" required placeholder="F.I.O.">
+          </label>
+          <label>Telefon raqami
+            <input id="car-phone" required placeholder="+998 90 123 45 67">
+          </label>
+          <label>Ishlab chiqarilgan yili
+            <input id="car-year" type="number" min="1900" max="2099" required>
+          </label>
+          <label>Vin-kod
+            <input id="car-vin" placeholder="VIN yoki shassi raqami">
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="secondary-btn" data-close="car-modal">Bekor qilish</button>
+          <button type="submit" class="primary-btn">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="service-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="service-modal-title">Yangi servis yozuvi</h2>
+        <button class="close-btn" data-close="service-modal">×</button>
+      </div>
+      <form id="service-form">
+        <input type="hidden" id="service-id">
+        <div class="form-grid">
+          <label>Avtomobil
+            <select id="service-car" required></select>
+          </label>
+          <label>Xizmat sanasi
+            <input id="service-date" type="date" required>
+          </label>
+          <label>Servisga yozilish vaqti
+            <input id="service-time" type="time" required>
+          </label>
+          <label>Xizmat turi
+            <input id="service-type" required placeholder="Masalan: Texnik ko'rik">
+          </label>
+          <label>Probeg (km)
+            <input id="service-mileage" type="number" min="0" required>
+          </label>
+          <label>Xizmat narxi
+            <input id="service-cost" type="number" min="0" required>
+          </label>
+          <label>Smeta miqdori
+            <input id="service-estimate" type="number" min="0" placeholder="Masalan: 500000">
+          </label>
+          <label>Keyingi muddat oralig‘i (km)
+            <input id="service-next-km" type="number" min="0" placeholder="Masalan: 10000">
+          </label>
+          <label>Keyingi muddat oralig‘i (oy)
+            <input id="service-next-months" type="number" min="0" placeholder="Masalan: 6">
+          </label>
+          <label>Mexanik
+            <input id="service-mechanic" placeholder="Mexanik F.I.Sh.">
+          </label>
+          <label>Taxminiy davomiyligi (soat)
+            <select id="service-duration">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+            </select>
+          </label>
+          <label>Holat
+            <select id="service-status">
+              <option value="Yozilgan">Yozilgan</option>
+              <option value="Tasdiqlangan">Tasdiqlangan</option>
+              <option value="Mexanik biriktirilgan">Mexanik biriktirilgan</option>
+              <option value="Jarayonda">Jarayonda</option>
+              <option value="Bajarildi">Bajarildi</option>
+              <option value="Bekor qilingan">Bekor qilingan</option>
+            </select>
+          </label>
+          <label>To‘lov holati
+            <select id="service-payment">
+              <option value="To‘lanmagan">To‘lanmagan</option>
+              <option value="Qisman to‘langan">Qisman to‘langan</option>
+              <option value="To‘liq to‘langan">To‘liq to‘langan</option>
+            </select>
+          </label>
+          <label>Keyingi xizmat sanasi
+            <input id="service-next-date" type="date" required>
+          </label>
+          <label>O‘rnatilgan ehtiyot qismlar
+            <input id="service-parts" placeholder="Masalan: Moy, filtr, tormoz kolodkasi">
+          </label>
+          <label class="full-width">
+            <input id="service-estimate-approved" type="checkbox" style="width:auto;height:auto;margin:0 8px 0 0">
+            Haydovchi smetani tasdiqladi
+          </label>
+          <label class="full-width">Izoh
+            <textarea id="service-note" rows="3" placeholder="Bajarilgan ishlar haqida qisqacha"></textarea>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="secondary-btn" data-close="service-modal">Bekor qilish</button>
+          <button type="submit" class="primary-btn">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
